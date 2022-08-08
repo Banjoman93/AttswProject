@@ -1,21 +1,18 @@
 package com.example.tddfirst;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.List;
-
+import com.example.tddfirst.entities.Doctor;
+import com.example.tddfirst.entities.Patient;
+import com.example.tddfirst.services.DoctorService;
+import com.example.tddfirst.services.PatientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.tddfirst.entities.Doctor;
-import com.example.tddfirst.entities.Patient;
-import com.example.tddfirst.services.DoctorService;
-import com.example.tddfirst.services.PatientService;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 	
 @SpringBootTest
 class TddfirstApplicationDoctorTest {
@@ -25,7 +22,8 @@ class TddfirstApplicationDoctorTest {
     @Autowired
     private PatientService patientService;
 
-    @BeforeEach																		//annotazione che dice al framework spring di eseguire ogni volta che deve eseguire un test di unità "prima di eseguire questo test esegui contentload"
+    @BeforeEach			
+    //annotazione che dice al framework spring di eseguire ogni volta che deve eseguire un test di unità "prima di eseguire questo test esegui contentload"
     void contextLoads() {
     	doctorService.deleteAll();
         patientService.deleteAll();
@@ -34,14 +32,14 @@ class TddfirstApplicationDoctorTest {
     @Test
     void DoctorInsert() {
         doctorService.save(new Doctor("Gaia", "Pittella"));
-        assertEquals("Gaia", doctorService.findBySurName("Pittella").getFirstName() );
+        assertEquals("Gaia", doctorService.findBySurName("Pittella").getFirstName());
     }
     
     @Test
     void DoctorsInsert() {
-         doctorService.save(new Doctor("Ugo", "Ferrari"));
-         doctorService.save(new Doctor("Ugo", "Pittella"));
-         assertEquals(2, doctorService.findByFirstName("Ugo").size());
+        doctorService.save(new Doctor("Ugo", "Ferrari"));
+        doctorService.save(new Doctor("Ugo", "Pittella"));
+        assertEquals(2, doctorService.findByFirstName("Ugo").size());
     }
 
     @Test
@@ -75,10 +73,27 @@ class TddfirstApplicationDoctorTest {
     
     @Test
     void removePatient() {
-        patientService.save(new Patient("Ugo","Sghella",1));
-        Doctor doctor= doctorService.findBySurName("Pittella");
-        doctorService.delete(doctor);
-        assertNull(doctorService.findBySurName("Pittella"));							//il test sarà corretto solo se passerà l'assertNull (non ci dovrà essere nessun dottore all'interno del repository con il cognome richiesto)
+        doctorService.save(new Doctor("Gaia", "Pittella"));
+        Doctor doctor = doctorService.findBySurName("Pittella");
+
+        Patient petient = new Patient("Ugo", "Sghella", 1);
+        patientService.save(petient);
+        doctor.insertPatient(petient);
+
+        List<Patient> listPatient = doctor.getPatients();
+        Patient patientToRomove = null;
+
+        for (Patient patient : listPatient) {
+            if (patient.getSurName().equals("Sghella")) {
+                patientToRomove = patient;
+            }
+        }
+
+        if (patientToRomove != null) {
+            doctor.removePatient(patientToRomove.getId());
+        }
+
+        assertFalse(doctor.checkPatient("Sghella"));
     }
 
     
