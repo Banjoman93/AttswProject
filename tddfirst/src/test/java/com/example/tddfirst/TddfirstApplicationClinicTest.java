@@ -40,11 +40,7 @@ class TddfirstApplicationClinicTest {
         assertEquals("Radiology", clinicServiceServiceImpl.findByFirstName("Radiology").getFirstName());
     }
     
-    @Test
-    void getId () {
-    	
-    }
-    
+
     @Test
     void insertDoctor() {
         clinicServiceServiceImpl.save(new Clinic("Radiology", Collections.<Doctor>emptyList()));

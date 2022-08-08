@@ -76,9 +76,9 @@ class TddfirstApplicationDoctorTest {
         doctorService.save(new Doctor("Gaia", "Pittella"));
         Doctor doctor = doctorService.findBySurName("Pittella");
 
-        Patient petient = new Patient("Ugo", "Sghella", 1);
-        patientService.save(petient);
-        doctor.insertPatient(petient);
+        Patient patient = new Patient("Ugo", "Sghella", 1);
+        patientService.save(patient);
+        doctor.insertPatient(patient);
 
         List<Patient> listPatient = doctor.getPatients();
         Patient patientToRomove = null;

@@ -51,6 +51,10 @@ public class Doctor {
     public String getSurName() {
         return surName;
     }
+    
+    public List<Patient> getPatients() {
+        return patients;
+    }
 
     public void setSurName(String surName) {
         this.surName = surName;
