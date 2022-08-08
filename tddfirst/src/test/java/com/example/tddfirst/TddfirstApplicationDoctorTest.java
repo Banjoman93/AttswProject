@@ -59,7 +59,7 @@ class TddfirstApplicationDoctorTest {
         doctor.setSurName("Boscolo");
         doctorService.save(doctor);
         doctor = doctorService.findBySurName("Boscolo");
-        assertEquals(doctor.getSurName(), "Boscolo");
+        assertEquals("Boscolo", doctor.getSurName());
         assertTrue(doctor.toString().contains("firstName='Gaia', surName='Boscolo'"));
     }
 
