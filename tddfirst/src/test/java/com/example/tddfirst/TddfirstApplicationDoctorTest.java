@@ -81,16 +81,16 @@ class TddfirstApplicationDoctorTest {
         doctor.insertPatient(patient);
 
         List<Patient> listPatient = doctor.getPatients();
-        Patient patientToRomove = null;
+        Patient patientToRemove = null;
 
-        for (Patient patient : listPatient) {
-            if (patient.getSurName().equals("Sghella")) {
-                patientToRomove = patient;
+        for (Patient patienttmp : listPatient) {
+            if (patienttmp.getSurName().equals("Sghella")) {
+                patientToRemove = patienttmp;
             }
         }
 
-        if (patientToRomove != null) {
-            doctor.removePatient(patientToRomove.getId());
+        if (patientToRemove != null) {
+            doctor.removePatient(patientToRemove.getId());
         }
 
         assertFalse(doctor.checkPatient("Sghella"));
