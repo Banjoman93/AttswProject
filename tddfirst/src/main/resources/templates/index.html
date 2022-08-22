@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<link th:href="@{/main.css}" rel="stylesheet" />
+<title>Clinics</title>
+</head>
+<body>
+	<div>
+		<a th:href="@{/new_clinic}">New clinic</a>
+	</div>
+	<!-- IF NO clinic IS PRESENT -->
+	<div th:if="${clinics.empty}">
+		<div>No clinic found</div>
+	</div>
+	<!-- ELSE -->
+	<div th:unless="${clinics.empty}">
+		<table id="clinic_table">
+			<caption>Clinics:</caption>
+			<thead>
+				<tr>
+					<th id="id">ID</th>
+					<th id="firstName">Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="clinic : ${clinics}">
+					<td th:text="${clinic.id}"></td>
+					<td th:text="${clinic.firstName}"></td>
+					<td><a th:href="@{/doctors/} + ${clinic.id}">View</a></td>
+					<td><a th:href="@{'/edit_clinic/' + ${clinic.firstName}}">Edit</a></td>
+					<td><a id="delete" th:href="@{'/delete_clinic/' + ${clinic.firstName}}">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
