@@ -1,7 +1,9 @@
 package com.example.tddfirst.services;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.example.tddfirst.entities.Clinic;
 import com.example.tddfirst.entities.Doctor;
 
 public interface DoctorService {
@@ -16,5 +18,8 @@ public interface DoctorService {
 	void delete(Doctor doctor);
 	
 	void deleteAll();
+	
+	Optional<Doctor> findById(String id);
+
 
 }
