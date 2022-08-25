@@ -1,10 +1,12 @@
 package com.example.tddfirst.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.tddfirst.entities.Doctor;
 import com.example.tddfirst.entities.Patient;
 import com.example.tddfirst.repository.PatientsRepository;
 
@@ -22,6 +24,9 @@ public class PatientServiceImpl implements PatientService {
 	public List<Patient> findByFirstName(String firstName) {
 		return patientrepository.findByFirstName(firstName);
 		}
+	
+	@Override
+	public Optional<Patient> findById(String id){return patientrepository.findById(id);};
 
 	@Override
 	public void save(Patient patient) {
@@ -39,5 +44,12 @@ public class PatientServiceImpl implements PatientService {
 		patientrepository.deleteAll();
 		
 	}
+	
+	public Patient insertPatient (Patient patient) {
+		patientrepository.save(patient);
+		return (Patient) this.findByFirstName(patient.getFirstName());
+	}
+
+
 
 }

@@ -1,11 +1,13 @@
 package com.example.tddfirst.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.tddfirst.entities.Doctor;
+import com.example.tddfirst.entities.Patient;
 import com.example.tddfirst.repository.DoctorRepository;
 
 @Service
@@ -24,6 +26,9 @@ public class DoctorServiceImpl implements DoctorService {
 		}
 
 	@Override
+	public Optional<Doctor> findById(String id){return doctorrepository.findById(id);};
+
+	@Override
 	public void save(Doctor doctor) {
 		doctorrepository.save(doctor);
 	}
@@ -39,5 +44,12 @@ public class DoctorServiceImpl implements DoctorService {
 		doctorrepository.deleteAll();
 		
 	}
+	
+	public Doctor insertPatient(Doctor doctor, Patient patient) {
+		doctor.insertPatient(patient);
+		doctorrepository.save(doctor);
+		return (Doctor) this.findByFirstName(doctor.getFirstName());
+	}
+
 
 }
