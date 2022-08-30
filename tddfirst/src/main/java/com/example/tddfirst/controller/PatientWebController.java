@@ -31,7 +31,7 @@ public class PatientWebController {
 
 	@GetMapping("/edit_patient/{name}")
 	public String editPatient(@PathVariable String name, Model model) {
-		Patient patientByName = patientService.findByFirstName(name);
+		List <Patient> patientByName = patientService.findByFirstName(name);
 		model.addAttribute(PATIENT_ATTRIBUTE, patientByName);
 		model.addAttribute(MESSAGE, patientByName == null ? "No patient found with name: " + name : "");
 		return "edit_patient";
@@ -65,9 +65,8 @@ public class PatientWebController {
 	@RequestMapping(value = "/delete_patient/{name}", method = { RequestMethod.GET,
 			RequestMethod.DELETE })
 	public String deletePatients(@PathVariable String name, Model model) {
-		Patient patient = patientService.findByFirstName(name);
+		List<Patient> patient = patientService.findByFirstName(name);
 		model.addAttribute(PATIENT_ATTRIBUTE, name);
-		patientService.delete(patient);
 		return "redirect:/";
 	}
 

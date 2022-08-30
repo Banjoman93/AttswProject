@@ -31,7 +31,7 @@ public class DoctorWebController {
 
 	@GetMapping("/edit_doctor/{name}")
 	public String editDoctor(@PathVariable String name, Model model) {
-		Doctor doctorByName = doctorService.findByFirstName(name);
+		List <Doctor> doctorByName = doctorService.findByFirstName(name);
 		model.addAttribute(DOCTOR_ATTRIBUTE, doctorByName);
 		model.addAttribute(MESSAGE, doctorByName == null ? "No doctor found with name: " + name : "");
 		return "edit_doctor";
@@ -46,7 +46,7 @@ public class DoctorWebController {
 
 	@PostMapping("/save_doctor")
 	public String saveDoctor(Doctor doctorEntity, Model model) {
-		public <Doctor> doctorPresent = doctorService.findBySurName(doctorEntity.getSurName());
+		final Optional <Doctor> doctorPresent = doctorService.findBySurName(doctorEntity.getSurName());
 		if (doctorPresent.isEmpty()) {
 			Doctor doctor = new Doctor(doctorEntity.getFirstName(), new ArrayList<>());
 			model.addAttribute(DOCTOR_ATTRIBUTE,doctor);
@@ -65,9 +65,8 @@ public class DoctorWebController {
 	@RequestMapping(value = "/delete_doctor/{name}", method = { RequestMethod.GET,
 			RequestMethod.DELETE })
 	public String deleteDoctors(@PathVariable String name, Model model) {
-		Doctor doctor = doctorService.findByFirstName(name);
+		List<Doctor> doctor = doctorService.findByFirstName(name);
 		model.addAttribute(DOCTOR_ATTRIBUTE, name);
-		doctorService.delete(doctor);
 		return "redirect:/";
 	}
 

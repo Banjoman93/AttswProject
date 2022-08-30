@@ -3,7 +3,6 @@ package com.example.tddfirst.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.tddfirst.entities.Doctor;
 import com.example.tddfirst.entities.Patient;
 
 public interface PatientService {
