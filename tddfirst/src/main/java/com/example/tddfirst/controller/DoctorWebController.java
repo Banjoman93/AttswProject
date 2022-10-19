@@ -39,16 +39,16 @@ public class DoctorWebController {
 
 	@GetMapping("/new_doctor")
 	public String newDoctor(Model model) {
-		model.addAttribute(DOCTOR_ATTRIBUTE, new Doctor("", new ArrayList<>()));
+		model.addAttribute(DOCTOR_ATTRIBUTE, new Doctor("",""));
 		model.addAttribute(MESSAGE, "");
 		return "edit_doctor";
 	}
 
-	@PostMapping("/save_doctor")
+	@PostMapping()
 	public String saveDoctor(Doctor doctorEntity, Model model) {
 		final Optional <Doctor> doctorPresent = doctorService.findBySurName(doctorEntity.getSurName());
 		if (doctorPresent.isEmpty()) {
-			Doctor doctor = new Doctor(doctorEntity.getFirstName(), new ArrayList<>());
+			Doctor doctor = new Doctor(doctorEntity.getFirstName(), doctorEntity.getSurName());
 			model.addAttribute(DOCTOR_ATTRIBUTE,doctor);
 			model.addAttribute(MESSAGE, "Doctor saved.");
 			doctorService.save(doctor);
