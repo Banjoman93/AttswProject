@@ -23,12 +23,11 @@ public class PatientWebController {
 
 	@GetMapping("/")
 	public String index(Model model) {
-		List<Patient> patients = patientService.findAll();
+		List<Patient> patients = patientService.getRepository().findAll();
 		model.addAttribute("patients", patients);
 		model.addAttribute(MESSAGE, patients.isEmpty() ? "No patients found" : "");
 		return "index";
 	}
-	
 
 	@GetMapping("/edit_patient/{name}")
 	public String editPatient(@PathVariable String name, Model model) {
@@ -40,7 +39,7 @@ public class PatientWebController {
 
 	@GetMapping("/new_patient")
 	public String newPatient(Model model) {
-		model.addAttribute(PATIENT_ATTRIBUTE, new Patient("", new ArrayList<>()));
+		model.addAttribute(PATIENT_ATTRIBUTE, new Patient("", "", 2));
 		model.addAttribute(MESSAGE, "");
 		return "edit_patient";
 	}

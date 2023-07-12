@@ -15,6 +15,11 @@ public class PatientServiceImpl implements PatientService {
 	PatientsRepository patientrepository;
 
 	@Override
+	public PatientsRepository getRepository() {
+		return patientrepository;
+	}
+	
+	@Override
 	public Patient findBySurName(String surName) {
 		return patientrepository.findBySurName(surName);
 	}

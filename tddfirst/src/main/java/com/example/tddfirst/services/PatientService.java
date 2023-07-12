@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.tddfirst.entities.Patient;
+import com.example.tddfirst.repository.PatientsRepository;
 
 public interface PatientService {
 
@@ -12,6 +13,8 @@ public interface PatientService {
 
 	List<Patient> findByFirstName(String firstName); //
 
+	public PatientsRepository getRepository();
+	
 	void save(Patient patient);
 
 	void delete(Patient patient);
