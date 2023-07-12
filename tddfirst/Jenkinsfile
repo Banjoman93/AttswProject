@@ -8,32 +8,44 @@ pipeline {
 
     stages {
          stage ('JDK_version') {
-                steps {
-                    bat 'java -version'
-                }
+            steps {
+                bat 'java -version'
             }
+         }
         
         
-        stage('clone repository') {
+        stage('Clone repository') {
             steps { 
-            	echo 'checkout repository...'
+        		echo 'checkout repository...'
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'sshcredentials', url: 'git@github.com:Banjoman93/AttswProject.git']]])
             	echo 'finished checkout repository...'
             	bat "dir"
-            }
+        	}
         }
         
-        stage('run test with maven') {
+        stage('Build with Maven') { 
+  		  	steps {
+      		  	dir('tddfirst') {
+           			echo 'Building...'
+           			bat 'mvn -B --no-transfer-progress clean install'
+            		echo 'Build completed'
+       			}
+  			}
+		}
+        
+        stage('Run test with maven') {
             steps { 
                 dir('tddfirst'){
-                	echo 'running tests...'
+            		echo 'running tests...'
                     bat 'mvn -B --no-transfer-progress test'
                     echo 'finished mvn tests'
                 }
             }
         }
         
-        stage('build jar with maven') {
+        
+        // Step che mi permette di Deployare 
+        stage('Build jar with maven') {
             steps { 
                 dir('tddfirst'){
                 	echo 'initialize build jar...'
@@ -45,7 +57,7 @@ pipeline {
         }
         
         
-        stage('SonarQube Analysis') {
+        stage('SonarCloud Analysis') {
             steps {
                 dir('tddfirst'){
                         bat "mvn sonar:sonar -Dsonar.projectKey=tddfirst_def -Dsonar.host.url=http://localhost:9000 -Dsonar.login=21bfd354d7de364f652e16e5eabc306449d32b4c"
@@ -53,7 +65,7 @@ pipeline {
             }
         }
         
-        stage('build docker image') {
+        stage('Build docker image') {
             steps {
                 bat 'docker --version'
                 dir('tddfirst'){
