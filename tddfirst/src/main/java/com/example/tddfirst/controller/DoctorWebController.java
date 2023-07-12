@@ -46,7 +46,7 @@ public class DoctorWebController {
 
 	@PostMapping()
 	public String saveDoctor(Doctor doctorEntity, Model model) {
-		final Optional <Doctor> doctorPresent = doctorService.findBySurName(doctorEntity.getSurName());
+		final Optional <Doctor> doctorPresent = Optional.of(doctorService.findBySurName(doctorEntity.getSurName()));
 		if (doctorPresent.isEmpty()) {
 			Doctor doctor = new Doctor(doctorEntity.getFirstName(), doctorEntity.getSurName());
 			model.addAttribute(DOCTOR_ATTRIBUTE,doctor);
@@ -59,9 +59,9 @@ public class DoctorWebController {
 			model.addAttribute(MESSAGE, "Doctor updated.");
 		}
 		return "redirect:/";
-	}
+	}	
 	
-
+	
 	@RequestMapping(value = "/delete_doctor/{name}", method = { RequestMethod.GET,
 			RequestMethod.DELETE })
 	public String deleteDoctors(@PathVariable String name, Model model) {

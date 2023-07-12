@@ -28,6 +28,7 @@ public class PatientWebController {
 		model.addAttribute(MESSAGE, patients.isEmpty() ? "No patients found" : "");
 		return "index";
 	}
+	
 
 	@GetMapping("/edit_patient/{name}")
 	public String editPatient(@PathVariable String name, Model model) {
