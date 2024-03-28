@@ -48,7 +48,7 @@ public class PatientWebController {
 	public String savePatient(Patient patientEntity, Model model) {
 		final Optional<Patient> patientPresent = patientService.findById(patientEntity.getId());
 		if (patientPresent.isEmpty()) {
-			Patient patient = new Patient(patientEntity.getFirstName(), new ArrayList<>());
+			Patient patient = new Patient(patientEntity.getFirstName(), patientEntity.getSurName(), 0);
 			model.addAttribute(PATIENT_ATTRIBUTE,patient);
 			model.addAttribute(MESSAGE, "Patient saved.");
 			patientService.save(patient);
